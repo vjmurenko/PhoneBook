@@ -1,0 +1,9 @@
+<form #form ="ngForm" (submit)="onSubmit(form)">
+    <input type ="hidden" name="ContactId" #ContactID [ngModel]="formData.ContactId" >
+   <div class="form-group col-md-6">
+       <label>Phone</label>
+       <input name="PhoneNumber" [(ngModel)]="formData.PhoneNumber" >
+   </div>
+    <button type="submit" class ="btn btn-dark">Submit</button>
+
+</form>

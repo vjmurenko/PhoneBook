@@ -1,0 +1,40 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)" >
+
+    <input type="hidden" name="Id" #Id="ngModel" [(ngModel)]="formData.Id">
+    <input type="hidden" name="ContactId" #ContactId = "ngModel" [(ngModel)]="formData.Id">
+
+    <div class="form-group col-md-6">
+        <label>Name</label>
+        <div class="input-group">
+            <input name="Name" #Name="ngModel" [(ngModel)]="formData.Name" class="form-control" >
+        </div>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Adress</label>
+        <div class="input-group">
+            <input name="Address" #Address="ngModel" [(ngModel)]="formData.Address" class="form-control" >
+        </div>
+    </div>
+
+    <div class="form-group col-md-6" *ngIf="this.data.contact!=null ">
+        <label>Phone</label>
+        <div class="input-group">
+            <input name="PhoneNumber" #PhoneNumber="ngModel" [(ngModel)]="formData.Phones[phoneIndex].PhoneNumber" class="form-control" >
+        </div>
+        <label name="Phones" #Phones="ngModel" [(ngModel)]="formData.Phones"></label>
+
+    </div>
+
+    <div class="form-group col-md-6" *ngIf="this.data.contact == null ">
+        <label>Phone</label>
+        <div class="input-group">
+            <input name="Phone" #Phone="ngModel"  [(ngModel)]="formData.Phones[0].PhoneNumber" class="form-control" >
+        </div>
+        <label name="Phones" #Phones="ngModel" [(ngModel)]="formData.Phones"></label>
+
+    </div>
+
+    <button type="submit" class ="btn btn-dark">Submit</button>
+
+</form>

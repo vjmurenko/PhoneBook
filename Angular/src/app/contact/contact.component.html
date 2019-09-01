@@ -1,0 +1,35 @@
+<table class="table table-hover">
+    <thead class="thead-light">
+
+    <th>Name</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>
+        <a class="btn btn-success text-white" (click)="addOrEditNewContact(null, null)"><i class="fa fa-plus-square"></i> Create New Contact</a>
+    </th>
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let contact of service.contactList; let i = index">
+        <td>{{contact.Name}}</td>
+        <td>{{contact.Address}}</td>
+        <td>
+            <select name="Phone" (load)="onChangePhoneNumber($event)" (change)="onChangePhoneNumber($event)" >
+                <option *ngFor="let phone of contact.Phones ; let i = index"> {{phone.PhoneNumber}} </option>
+            </select>
+        </td>
+
+        <td>
+            <a class="btn btn-sm btn-success text-white ml-1" (click)="onAddPhoneNumber(contact.Id)"><i class="fa fa-phone" aria-hidden="true"> </i></a>
+            <a class="btn btn-sm btn-info text-white ml-1" (click)="addOrEditNewContact(contact, PhoneNumberID)"><i
+                    class="fa fa-pencil"></i></a>
+            <a class="btn btn-sm btn-danger text-white ml-1" (click)="deleteContact(contact.Id)"><i
+                    class="fa fa-trash"></i></a>
+
+        </td>
+
+    </tr>
+    </tbody>
+
+</table>
