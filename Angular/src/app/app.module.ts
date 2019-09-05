@@ -12,6 +12,7 @@ import {AppComponent} from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { PopupContactComponent } from './popup-contact/popup-contact.component';
 import { PopupPhoneComponent } from './popup-phone/popup-phone.component';
+import {NgxMaskModule} from "ngx-mask-2";
 
 
 
@@ -28,7 +29,8 @@ import { PopupPhoneComponent } from './popup-phone/popup-phone.component';
         BrowserAnimationsModule,
         MatDialogModule,
         HttpClientModule,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        NgxMaskModule.forRoot()
     ],
     entryComponents:[PopupContactComponent, PopupPhoneComponent],
     providers: [ContactService],

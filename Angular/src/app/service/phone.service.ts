@@ -13,14 +13,18 @@ export class PhoneService {
 
   putPhone(contactId, phoneNumber, phoneID){
     var body ={
-      Id: phoneID,
       ContactId : contactId,
-      PhoneNumber: phoneNumber
+      PhoneNumber: phoneNumber,
+      Id: phoneID
     };
     return this.http.put(environment.apiURL + '/Phone/' + phoneID, body);
   }
 
   postPhone(formData: Phone){
     return this.http.post(environment.apiURL + '/Phone', formData);
+  }
+
+  deletePhone(phoneId: number){
+    return this.http.delete(environment.apiURL + '/Phone/' + phoneId);
   }
 }

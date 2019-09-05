@@ -3,38 +3,51 @@
     <input type="hidden" name="Id" #Id="ngModel" [(ngModel)]="formData.Id">
     <input type="hidden" name="ContactId" #ContactId = "ngModel" [(ngModel)]="formData.Id">
 
-    <div class="form-group col-md-6">
+    <div class="form-group ">
         <label>Name</label>
         <div class="input-group">
-            <input name="Name" #Name="ngModel" [(ngModel)]="formData.Name" class="form-control" >
+            <input  name="Name" #Name="ngModel" [(ngModel)]="formData.Name" class="form-control" required  >
         </div>
     </div>
 
-    <div class="form-group col-md-6">
-        <label>Adress</label>
+    <div class="form-group ">
+        <label>Address</label>
         <div class="input-group">
-            <input name="Address" #Address="ngModel" [(ngModel)]="formData.Address" class="form-control" >
+            <input name="Address" #Address="ngModel" [(ngModel)]="formData.Address" class="form-control" required >
         </div>
     </div>
 
-    <div class="form-group col-md-6" *ngIf="this.data.contact!=null ">
+    <div class="form-group " *ngIf="this.data.contact!=null">
         <label>Phone</label>
         <div class="input-group">
-            <input name="PhoneNumber" #PhoneNumber="ngModel" [(ngModel)]="formData.Phones[phoneIndex].PhoneNumber" class="form-control" >
+            <input name="PhoneNumber" #PhoneNumber="ngModel"  [ngModel]="formData.Phones[phoneIndex].PhoneNumber" class="form-control"  required
+            prefix="+" mask="0(000)000-00-00" [appendPrefixToModel]="true" [showMaskTyped]="true" minlength="11" >
         </div>
-        <label name="Phones" #Phones="ngModel" [(ngModel)]="formData.Phones"></label>
+        <input  type="hidden" name="Phones" #Phones="ngModel" [(ngModel)]="formData.Phones">
+
+        <br>
+        <button type="submit" [disabled]="form.invalid" class ="btn btn-success form-control"
+                (click)="toastr.info('Contact Edited') && (formData.Phones[phoneIndex].PhoneNumber = PhoneNumber.value)">Submit</button>
 
     </div>
 
-    <div class="form-group col-md-6" *ngIf="this.data.contact == null ">
+    <div class="form-group " *ngIf="this.data.contact == null">
         <label>Phone</label>
         <div class="input-group">
-            <input name="Phone" #Phone="ngModel"  [(ngModel)]="formData.Phones[0].PhoneNumber" class="form-control" >
+            <input name="Phone" #Phone="ngModel"  [(ngModel)]="formData.Phones[0].PhoneNumber" class="form-control" required
+                   prefix="+" mask="0(000)000-00-00" [appendPrefixToModel]="true" [showMaskTyped]="true"  minlength="11" >
         </div>
-        <label name="Phones" #Phones="ngModel" [(ngModel)]="formData.Phones"></label>
+        <input type="hidden" name="Phones" #Phones="ngModel" [(ngModel)]="formData.Phones">
+
+        <br>
+        <button type="submit" [disabled]="form.invalid" class ="btn btn-success form-control" (click)="toastr.success('Contact Added Successfully')">Submit</button>
 
     </div>
 
-    <button type="submit" class ="btn btn-dark">Submit</button>
+    <div class="form-group " >
+        <button type="reset" class="btn btn-outline-dark form-control " [mat-dialog-close] ><i class="fa fa-close"></i> Close</button>
+    </div>
+
+
 
 </form>

@@ -11,25 +11,25 @@
 
     <tbody>
 
-    <tr *ngFor="let contact of service.contactList; let i = index">
+    <tr *ngFor="let contact of contactService.contactList; let i = index">
         <td>{{contact.Name}}</td>
         <td>{{contact.Address}}</td>
         <td>
-            <select name="Phone" (load)="onChangePhoneNumber($event)" (change)="onChangePhoneNumber($event)" >
-                <option *ngFor="let phone of contact.Phones ; let i = index"> {{phone.PhoneNumber}} </option>
+            <select name="Phone" #Phone (load)="onChangePhoneNumber($event)" (change)="onChangePhoneNumber($event)" >
+                <option *ngFor="let phone of contact.Phones ; let i = index"> {{phone.PhoneNumber | mask: '+0(000)000-00-00'}} </option>
             </select>
         </td>
-
         <td>
-            <a class="btn btn-sm btn-success text-white ml-1" (click)="onAddPhoneNumber(contact.Id)"><i class="fa fa-phone" aria-hidden="true"> </i></a>
+            <button  class="btn btn-sm btn-danger text-white ml-1" (click)="deletePhone(contact.Phones[Phone.selectedIndex].Id)" [disabled]="contact.Phones.length<2" >
+                Delete Phone</button>
+            <a class="btn btn-sm btn-success text-white ml-1" (click)="onAddPhoneNumber(contact.Id)">Add Phone</a>
             <a class="btn btn-sm btn-info text-white ml-1" (click)="addOrEditNewContact(contact, PhoneNumberID)"><i
                     class="fa fa-pencil"></i></a>
-            <a class="btn btn-sm btn-danger text-white ml-1" (click)="deleteContact(contact.Id)"><i
-                    class="fa fa-trash"></i></a>
-
+            <a class="btn btn-sm btn-danger text-white ml-1" (click)="deleteContact(contact.Id)"><i class="fa fa-trash"></i></a>
         </td>
 
     </tr>
     </tbody>
+
 
 </table>

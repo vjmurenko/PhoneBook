@@ -1,9 +1,11 @@
-<form #form ="ngForm" (submit)="onSubmit(form)">
+<form #form ="ngForm" (submit)="onSubmit(form)" autocomplete="off">
     <input type ="hidden" name="ContactId" #ContactID [ngModel]="formData.ContactId" >
-   <div class="form-group col-md-6">
+   <div class="form-group">
        <label>Phone</label>
-       <input name="PhoneNumber" [(ngModel)]="formData.PhoneNumber" >
+       <input name="PhoneNumber" [(ngModel)]="formData.PhoneNumber"  class="input-group" required
+      prefix="+" mask="0(000)000-00-00" [appendPrefixToModel]="true" [showMaskTyped]="true" minlength="11">
    </div>
-    <button type="submit" class ="btn btn-dark">Submit</button>
+    <button type="submit" class ="btn btn-dark form-group col-md-6" [disabled]="form.invalid" (click)="toastr.success('Phone Added')">Submit</button>
+    <button type="button" class="btn btn-outline-dark  form-group col-md-6" [mat-dialog-close] ><i class="fa fa-close"></i> Close</button>
 
 </form>

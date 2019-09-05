@@ -5,6 +5,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material";
 import {PopupContactComponent} from "../popup-contact/popup-contact.component";
 import {ToastrService} from "ngx-toastr";
 import {PopupPhoneComponent} from "../popup-phone/popup-phone.component";
+import {PhoneService} from "../service/phone.service";
 
 
 @Component({
@@ -18,7 +19,8 @@ export class ContactComponent implements OnInit {
     PhoneNumberID: number = 0;
 
 
-    constructor(private service: ContactService,
+    constructor(private contactService: ContactService,
+                private phoneService: PhoneService,
                 private dialog: MatDialog,
                 private  toastr: ToastrService) {
     }
@@ -30,43 +32,43 @@ export class ContactComponent implements OnInit {
     }
 
     refreshList() {
-        this.service.getContactList().then(res => this.service.contactList = res as Contact[]);
+        this.contactService.getContactList().subscribe(res => this.contactService.contactList = res as Contact[]);
     }
 
     addOrEditNewContact(contact: Contact, phoneId: number) {
+
 
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.disableClose = true;
         dialogConfig.width = "50%";
-        dialogConfig.height = "50%";
+        dialogConfig.height = "46%";
         dialogConfig.data = {contact, phoneId};
 
-
-        this.dialog.open(PopupContactComponent, dialogConfig).afterClosed().subscribe(() =>{
+        this.dialog.open(PopupContactComponent, dialogConfig).afterClosed().subscribe(res => {
                 this.refreshList();
-                this.toastr.success("Added successfully")
-
-        }
+                this.PhoneNumberID = 0;
+            }
         );
 
     }
 
     deleteContact(contactID: number) {
-        this.service.deleteContact(contactID).then(() => {
-            this.refreshList();
-            this.toastr.warning("Deleted successfully")
+        if (confirm("Are you sure to delete this contact?")) {
+            this.contactService.deleteContact(contactID).subscribe(() => {
+                this.refreshList();
+                this.toastr.error("Deleted successfully")
 
-        })
-
+            })
+        }
     }
 
-    onChangePhoneNumber(event){
+    onChangePhoneNumber(event) {
 
-     this.PhoneNumberID = event.target.selectedIndex;
+        this.PhoneNumberID = event.target.selectedIndex;
     }
 
-    onAddPhoneNumber(contactID: number ){
+    onAddPhoneNumber(contactID: number) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.disableClose = true;
@@ -74,13 +76,20 @@ export class ContactComponent implements OnInit {
         dialogConfig.height = "20%";
         dialogConfig.data = {contactID};
 
-
-        this.dialog.open(PopupPhoneComponent, dialogConfig).afterClosed().subscribe(() =>{
+        this.dialog.open(PopupPhoneComponent, dialogConfig).afterClosed().subscribe(() => {
             this.refreshList();
-            this.toastr.success("Phone added successfully")
 
         });
+    }
 
+    deletePhone(phoneId: number){
+        if(confirm("Are you sure to delete phone?")){
+
+            this.phoneService.deletePhone(phoneId).subscribe(()=>{
+                this.toastr.error("Phone deleted");
+                this.refreshList();
+            });
+        }
     }
 
 }

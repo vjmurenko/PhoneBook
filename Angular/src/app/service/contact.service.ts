@@ -15,7 +15,7 @@ export class ContactService {
 
 
   getContactList(){
-    return this.http.get(environment.apiURL + '/Contact').toPromise();
+    return this.http.get(environment.apiURL + '/Contact');
   }
 
   postContact(formData: Contact){
@@ -27,7 +27,7 @@ export class ContactService {
   }
 
   deleteContact(id: number){
-    return this.http.delete(environment.apiURL + '/Contact/' + id).toPromise();
+    return this.http.delete(environment.apiURL + '/Contact/' + id);
   }
 
 

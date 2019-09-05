@@ -4,6 +4,6 @@ export class Contact {
     Id: number;
     Name: string;
     Address:string;
-    Phones: Array<Phone>;
+    Phones?: Array<Phone>;
 
   }
